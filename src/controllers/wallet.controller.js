@@ -23,14 +23,14 @@ class WalletController {
             ]
         });
         return res.send(myWallet)
-        // myWallet.save(err => {
-        //     if (err)
-        //         return next(err);
-        //     res.status(200).send({
-        //         status: 200,
-        //         message: "Wallet Created"
-        //     })
-        // });
+        myWallet.save(err => {
+            if (err)
+                return next(err);
+            res.status(200).send({
+                status: 200,
+                message: "Wallet Created"
+            })
+        });
     }
 }
 module.exports = WalletController
