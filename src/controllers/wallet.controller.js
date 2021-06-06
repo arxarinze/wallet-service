@@ -12,7 +12,9 @@ class WalletController {
                     name: body.name,
                     objects: {
                         BTC: await BTCService.createWallet('BTC'),
+                        ETH: {
 
+                        }
                     }
                 }
             ]
