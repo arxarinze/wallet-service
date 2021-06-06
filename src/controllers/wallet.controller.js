@@ -2,7 +2,7 @@ let BTCService = require('../services/btc.service');
 const Wallets = require("../models/wallet.model");
 const { ObjectID } = require('mongodb');
 class WalletController {
-    static createWallet = async (req, res) => {
+    static createWallet = async (req, res, next) => {
         let body = req.body;
         const myWallet = new Wallets({
             user_id: ObjectID(),
@@ -11,7 +11,7 @@ class WalletController {
                 {
                     name: body.name,
                     objects: {
-                        BTC: await BTCService.createWallet('BTC'),
+                        BTC: await BTCService.createWallet(),
                         ETH: {
 
                         }
@@ -21,8 +21,8 @@ class WalletController {
         });
         myWallet.save(err => {
             if (err)
-                return next(err);
-            res.status(200).send({
+                return res.status(500).send({ err })
+            return res.status(200).send({
                 status: 200,
                 message: "Wallet Created"
             })
