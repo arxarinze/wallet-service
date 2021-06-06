@@ -22,7 +22,6 @@ class WalletController {
                 }
             ]
         });
-        return res.send(myWallet)
         myWallet.save(err => {
             if (err)
                 return next(err);
