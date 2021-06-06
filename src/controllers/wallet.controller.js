@@ -14,10 +14,7 @@ class WalletController {
                         BTC: await BTCService.createWallet('BTC'),
                         ETH: {
 
-                        },
-                        BNB: {
-
-                        },
+                        }
                     }
                 }
             ]
