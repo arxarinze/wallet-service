@@ -5,6 +5,7 @@ class BTCService {
     static createWallet = async () => {
         try {
             let raw = await axios.get(CORE_ENGINE + '/api/address/BTC');
+            console.log(raw.data)
             return raw.data;
         } catch (error) {
             return error
