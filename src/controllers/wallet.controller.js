@@ -1,4 +1,5 @@
 let BTCService = require('../services/btc.service');
+let ETHService = require('../services/eth.service');
 const Wallets = require("../models/wallet.model");
 const { ObjectID } = require('mongodb');
 class WalletController {
@@ -12,9 +13,7 @@ class WalletController {
                     name: body.name,
                     objects: {
                         BTC: await BTCService.createWallet(),
-                        ETH: {
-
-                        }
+                        ETH: await ETHService.createWallet(),
                     }
                 }
             ]
