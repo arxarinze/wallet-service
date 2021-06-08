@@ -27,5 +27,14 @@ class WalletController {
             })
         });
     }
+    static getWalletByName = async (req, res, next) => {
+        let name = req.params.id
+        let wallet = Wallets.findOne({ "wallets.0.name": name });
+        return res.status(200).send({
+            status: 200,
+            name,
+            wallet
+        })
+    }
 }
 module.exports = WalletController
