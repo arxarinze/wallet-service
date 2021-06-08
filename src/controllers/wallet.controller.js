@@ -28,11 +28,26 @@ class WalletController {
         });
     }
     static getWalletByName = async (req, res, next) => {
-        let name = req.params.id
-        let wallet = Wallets.findOne({ "wallets.0.name": name });
+        let user = "tnk"
+        let name = req.params.name
+        console.log(name)
+        let wallet = await Wallets.findOne(
+            { "wallets.0.name": name, "username": user },
+            {
+                "wallets.objects.BTC.privatekey": 0,
+                "wallets.objects.ETH.privatekey": 0
+            });
+        // console.log(wallet.wallets[0].name)
+        if (!wallet)
+            return res.status(400).send({
+                status: 404,
+                name: null,
+                wallet: null
+            })
+
         return res.status(200).send({
             status: 200,
-            name,
+            name: wallet.wallets[0].name,
             wallet
         })
     }
