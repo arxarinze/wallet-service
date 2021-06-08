@@ -25,12 +25,5 @@ app.post(`/${base}/${version}/`, (req, res) => {
     // console.log(pk)
     res.send("<h1>Hello, aren't we the best at what we do?</h1>")
 })
-app.get(`/${base}/${version}/wallet`, (req, res) => {
-    Wallets.findOne({
-        "username": "tnk"
-    }, (err, wallet) => {
-        if (err) return next(err);
-        res.status(200).json(wallet);
-    });
-})
+app.get(`/${base}/${version}/wallet/:name`, WalletController.getWalletByName)
 app.post(`/${base}/${version}/wallet`, WalletController.createWallet)
