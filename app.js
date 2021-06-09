@@ -16,7 +16,9 @@ app.listen(port, () => {
 });
 mongoose.connect(
     process.env.DB_URL,
-    { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+    {
+        useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false
+    }, () => {
         console.log('MongoDB Connected')
     })
 app.post(`/${base}/${version}/`, (req, res) => {
@@ -26,4 +28,5 @@ app.post(`/${base}/${version}/`, (req, res) => {
     res.send("<h1>Hello, aren't we the best at what we do?</h1>")
 })
 app.get(`/${base}/${version}/wallet/:name`, WalletController.getWalletByName)
+app.put(`/${base}/${version}/wallet/:name/:replace`, WalletController.updateNameWalletByName)
 app.post(`/${base}/${version}/wallet`, WalletController.createWallet)
