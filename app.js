@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-const WalletController = require('./src/controllers/wallet.controller')
+const AccountController = require('./src/controllers/account.controller')
 const app = express();
 const port = process.env.PORT || 5000;
 const base = 'api'
@@ -27,6 +27,6 @@ app.post(`/${base}/${version}/`, (req, res) => {
     // console.log(pk)
     res.send("<h1>Hello, aren't we the best at what we do?</h1>")
 })
-app.get(`/${base}/${version}/wallet/:name`, WalletController.getWalletByName)
-app.put(`/${base}/${version}/wallet/:name/:replace`, WalletController.updateNameWalletByName)
-app.post(`/${base}/${version}/wallet`, WalletController.createWallet)
+//app.get(`/${base}/${version}/wallet/:name`, WalletController.getWalletByName)
+//app.put(`/${base}/${version}/wallet/:name/:replace`, WalletController.updateNameWalletByName)
+app.post(`/${base}/${version}/account`, AccountController.createAccount)

@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema;
 
-const WalletSchema = new Schema({
+const AccountSchema = new Schema({
     user_id: { type: String, required: true, id: true },
     username: { type: String, required: true },
-    wallets:
+    account:
     {
         _id: false,
 
@@ -17,4 +17,4 @@ const WalletSchema = new Schema({
     createdAt: { type: Date, default: Date.now() }
 
 });
-module.exports = mongoose.model("wallets", WalletSchema);
+module.exports = mongoose.model("accounts", AccountSchema);

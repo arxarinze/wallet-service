@@ -5,7 +5,7 @@ class Producer {
         this.host = host
     }
 
-    balanceQueue = (msg) => {
+    accountQueue = (msg) => {
         amqp.connect(this.host, function (error0, connection) {
             if (error0) {
                 throw error0;
@@ -14,7 +14,27 @@ class Producer {
                 if (error1) {
                     throw error1;
                 }
-                var queue = 'balance';
+                var queue = 'account-create';
+                channel.assertQueue(queue, {
+                    durable: false
+                });
+
+                channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
+                console.log(" [x] Sent %s", msg);
+            });
+        })
+    }
+
+    walletQueue = (msg) => {
+        amqp.connect(this.host, function (error0, connection) {
+            if (error0) {
+                throw error0;
+            }
+            connection.createChannel(function (error1, channel) {
+                if (error1) {
+                    throw error1;
+                }
+                var queue = 'wallet-create';
                 channel.assertQueue(queue, {
                     durable: false
                 });
