@@ -2,6 +2,7 @@ let BTCService = require('../services/btc.service');
 let ETHService = require('../services/eth.service');
 const Wallets = require("../models/wallet.model");
 const { ObjectID } = require('mongodb');
+const Consumer = require('../consumers/consumer.queue');
 class WalletController {
     static createWallet = async (req, res, next) => {
         let body = req.body;
@@ -21,6 +22,12 @@ class WalletController {
         myWallet.save(err => {
             if (err)
                 return res.status(500).send({ err })
+            let balanceObj = {
+
+            }
+            new Consumer(process.env.RABBIT_MQ_HOST).balanceQueue({
+                message: "hello"
+            });
             return res.status(200).send({
                 status: 200,
                 message: "Wallet Created"
