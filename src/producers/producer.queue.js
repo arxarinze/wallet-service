@@ -1,6 +1,6 @@
 var amqp = require('amqplib/callback_api');
 
-class Consumer {
+class Producer {
     constructor(host) {
         this.host = host
     }
@@ -26,4 +26,4 @@ class Consumer {
     }
 }
 
-module.exports = Consumer;
+module.exports = Producer;

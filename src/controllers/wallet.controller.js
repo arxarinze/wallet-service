@@ -2,32 +2,54 @@ let BTCService = require('../services/btc.service');
 let ETHService = require('../services/eth.service');
 const Wallets = require("../models/wallet.model");
 const { ObjectID } = require('mongodb');
-const Consumer = require('../consumers/consumer.queue');
+const Producer = require('../producers/producer.queue');
 class WalletController {
     static createWallet = async (req, res, next) => {
-        let body = req.body;
         const myWallet = new Wallets({
             user_id: ObjectID(),
-            username: body.username,
-            wallets: [
-                {
-                    name: body.name,
-                    objects: {
-                        BTC: await BTCService.createWallet(),
-                        ETH: await ETHService.createWallet(),
-                    }
-                }
-            ]
+            username: "tnk",
+            wallets:
+            {
+                BTC: await BTCService.createWallet(),
+                ETH: await ETHService.createWallet(),
+            }
+
         });
+
         myWallet.save(err => {
             if (err)
                 return res.status(500).send({ err })
-            let balanceObj = {
-
+            let user_id = ObjectID("60bd5f7dd2ddfd4dc011dca5");
+            let balanceObj = [{
+                user_id,
+                currency: "BTC",
+                amount: 0.00,
+                type: "credit",
+                details: {
+                    receiver: myWallet.wallets.BTC.address,
+                    sender: "core"
+                },
+                category: "Initial",
+                data: {},
+                wallet: "default",
+            },
+            {
+                user_id,
+                currency: "ETH",
+                amount: 0.00,
+                type: "credit",
+                details: {
+                    receiver: myWallet.wallets.ETH.address,
+                    sender: "core"
+                },
+                category: "Initial",
+                data: {},
+                wallet: "default",
             }
-            new Consumer(process.env.RABBIT_MQ_HOST).balanceQueue({
-                message: "hello"
-            });
+            ]
+            balanceObj.map(obj => {
+                new Producer(process.env.RABBIT_MQ).balanceQueue(obj);
+            })
             return res.status(200).send({
                 status: 200,
                 message: "Wallet Created"
@@ -76,9 +98,10 @@ class WalletController {
             let wallets = await Wallets.findOneAndUpdate(
                 {
                     username: user,
+                    name
                 },
-                { $set: { "wallets.$[elem].name": replace } },
-                { arrayFilters: [{ "elem.name": name }] }
+                { $set: { "name": replace } },
+                //{ arrayFilters: [{ "elem.name": name }] }
             )
             res.status(200).send({
                 status: 200,
