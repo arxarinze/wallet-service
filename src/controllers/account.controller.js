@@ -62,12 +62,12 @@ class AccountController {
                             currency: "BTC",
                             amount: 0.00,
                             type: "credit",
-                            name: "default",
+                            wallet: "default",
                             category: "Wallet Transfer"
                         }, {
                             user_id,
                             currency: "ETH",
-                            amount: 0.00,
+                            wallet: 0.00,
                             type: "credit",
                             name: "default",
                             category: "Wallet Transfer"
