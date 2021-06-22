@@ -9,7 +9,7 @@ class AccountController {
         try {
             let user_id = ObjectID("60bd5f7dd2ddfd4dc011dca5");
             let account = await Account.findOne({ user_id });
-            if (account != null) {
+            if (account == null) {
                 const myAccount = new Account({
                     user_id,
                     account:
@@ -26,7 +26,8 @@ class AccountController {
                         _id: {
                             user_id,
                             wallet: "default"
-                        }
+                        },
+                        description: "This your default wallet"
                     });
                     myWallet.save(err => {
                         if (err)
@@ -67,9 +68,9 @@ class AccountController {
                         }, {
                             user_id,
                             currency: "ETH",
-                            wallet: 0.00,
+                            amount: 0.00,
                             type: "credit",
-                            name: "default",
+                            wallet: "default",
                             category: "Wallet Transfer"
                         }]
 

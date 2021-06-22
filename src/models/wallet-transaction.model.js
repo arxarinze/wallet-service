@@ -12,4 +12,9 @@ const WalletTransactionSchema = new Schema({
     createdAt: { type: Date, default: Date.now() },
     updatedAt: { type: Date, default: Date.now() }
 });
-module.exports = mongoose.model("wallet-transactions", WalletTransactionSchema);
+let conn = mongoose.createConnection(
+    process.env.DB_URL2,
+    {
+        useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true
+    });
+module.exports = conn.model("wallettransactions", WalletTransactionSchema);

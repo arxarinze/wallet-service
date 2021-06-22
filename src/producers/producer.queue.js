@@ -21,6 +21,10 @@ class Producer {
 
                 channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
                 console.log(" [x] Sent %s", msg);
+                channel.close();
+            });
+            connection.on('error', function (handle) {
+                console.log(handle)
             });
         })
     }
@@ -41,6 +45,10 @@ class Producer {
 
                 channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
                 console.log(" [x] Sent %s", msg);
+                channel.close();
+            });
+            connection.on('error', function (handle) {
+                console.log(handle)
             });
         })
     }
