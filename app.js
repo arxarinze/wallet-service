@@ -23,7 +23,7 @@ mongoose.connect(
     }, () => {
         console.log('MongoDB Connected')
     })
-app.post(`/${base}/${version}/`, (req, res) => {
+app.get(`/${base}/${version}/`, (req, res) => {
     // var web3 = new Web3("http://3.8.39.172:8545");
     // let pk = web3.eth.accounts.privateKeyToAccount("0x9f3a601719d674fc146d5456bf84fc465d35e56303eeb5efeb1e70384ecb9958")
     // console.log(pk)
